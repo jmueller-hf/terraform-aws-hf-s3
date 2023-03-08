@@ -1,7 +1,11 @@
+locals {
+  bucket = lower(var.bucket) 
+}
+
 resource "aws_s3_bucket" "bucket" {
-  bucket                 = lower(var.bucket)
+  bucket                 = local.bucket
   tags = {
-    "Name"            = (var.bucket)
+    "Name"            = local.bucket)
     "Service Role"    = "S3 Bucket"
   }
 }
@@ -46,7 +50,7 @@ data "aws_iam_policy_document" "deny_unencrypted_object_upload" {
       identifiers = ["*"]
     }
     actions = ["s3:PutObject"]
-    resources = ["arn:aws:s3:::${var.bucket}/*"]
+    resources = ["arn:aws:s3:::${local.bucket}/*"]
     condition {
       test = "Null"
       variable = "s3:x-amz-server-side-encryption"
