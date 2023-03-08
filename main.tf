@@ -21,7 +21,7 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
   count = length(compact(data.aws_iam_policy_document.combined_policy.source_policy_documents))
-  bucket = var.bucket
+  bucket = aws_s3_bucket.bucket.bucket
   policy = data.aws_iam_policy_document.combined_policy.json
 }
 
