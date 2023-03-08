@@ -62,7 +62,6 @@ data "aws_iam_policy_document" "deny_unencrypted_object_upload" {
 data "aws_iam_policy_document" "combined_policy" {
   source_policy_documents = compact([
     data.aws_iam_policy_document.force_ssl_only.json,
-    data.aws_iam_policy_document.deny_unencrypted_object_upload.json,
-    (data.aws_iam_policy_document.combined_policy_access.source_policy_documents != null ? data.aws_iam_policy_document.combined_policy_access.json : ""),
+    data.aws_iam_policy_document.deny_unencrypted_object_upload.json
   ])
 }
