@@ -6,3 +6,8 @@ variable "bucket" {
     error_message = "Bucket name must be start with hf- and contain only alphanumeric characters [a-z0-9-]"
   }
 }
+
+variable "policies" {
+  type = list(string)
+  default     = [""]
+}
