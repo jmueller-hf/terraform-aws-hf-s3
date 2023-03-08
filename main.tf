@@ -59,9 +59,22 @@ data "aws_iam_policy_document" "deny_unencrypted_object_upload" {
   }
 }
 
+data "aws_iam_policy_document" "react" {
+  statement {
+    effect = "allow"
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+    actions = ["s3:PutObject", "s3:GetObject", "s3:List*"]
+    resources = ["arn:aws:s3:::${local.bucket}/*"]
+  }
+}
+
 data "aws_iam_policy_document" "combined_policy" {
   source_policy_documents = compact([
     data.aws_iam_policy_document.force_ssl_only.json,
-    data.aws_iam_policy_document.deny_unencrypted_object_upload.json
+    data.aws_iam_policy_document.deny_unencrypted_object_upload.json,
+    contains(var.polices,"react") ? data.aws_iam_policy_document.react.json : ""
   ])
 }
