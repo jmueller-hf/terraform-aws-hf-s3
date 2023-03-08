@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket                 = var.bucket
+  bucket                 = lower(var.bucket)
   tags = {
-    "Name"            = var.bucket
+    "Name"            = (var.bucket)
     "Service Role"    = "S3 Bucket"
   }
 }
